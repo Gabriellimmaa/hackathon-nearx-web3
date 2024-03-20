@@ -12,6 +12,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
   },
+  images: {
+    domains: ["localhost", "cdn.discordapp.com"],
+  },
 };
 
 module.exports = nextConfig;
