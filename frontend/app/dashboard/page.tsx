@@ -21,8 +21,11 @@ export default async function Dashboard() {
         <h4 className="text-md font-thin">Basta clicar em criar regra e seguir as instruções</h4>
         <button className="bg-primary-500 p-4 py-2 rounded-md w-[200px] mx-auto font-normal mt-4">Criar Regras</button>
       </div> */}
-      <div className="grid grid-cols-8 gap-4 ml-8">
-        <div className="grid col-span-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-8 gap-4 ml-8 h-full">
+        <div className="grid col-span-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-[75vh] overflow-auto">
+          <Card title="Regra de acesso" chain="chain aqui" token="token aqui" address="endereco" min="1" max="10" />
+          <Card title="Regra de acesso" chain="chain aqui" token="token aqui" address="endereco" min="1" max="10" />
+          <Card title="Regra de acesso" chain="chain aqui" token="token aqui" address="endereco" min="1" max="10" />
           <Card title="Regra de acesso" chain="chain aqui" token="token aqui" address="endereco" min="1" max="10" />
           <Card title="Regra de acesso" chain="chain aqui" token="token aqui" address="endereco" min="1" max="10" />
           <Card title="Regra de acesso" chain="chain aqui" token="token aqui" address="endereco" min="1" max="10" />

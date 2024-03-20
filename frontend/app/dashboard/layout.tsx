@@ -21,7 +21,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full h-[100vh]">
       <div className="bg-background-500 w-[72px] p-2 gap-2 flex flex-col">
         <div className="bg-primary-500 w-[57px] h-[57px] rounded-md">.</div>
         <div className="bg-primary-500 w-[57px] h-[57px] rounded-md">.</div>
