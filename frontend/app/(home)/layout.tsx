@@ -3,9 +3,8 @@ import { NavBar } from "./components/navBar";
 import "@rainbow-me/rainbowkit/styles.css";
 import { Toaster } from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
-import { Footer } from "~~/components/Footer";
-
 import Providers from "~~/Providers";
+import { Footer } from "~~/components/Footer";
 
 export default function LayoutHome({
   children,
