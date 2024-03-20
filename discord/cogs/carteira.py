@@ -18,7 +18,7 @@ class Carteira(commands.Cog):
             "user": {
                 "id": author.id,
                 "name": author.name,
-                "avatar": author.avatar.url,
+                "avatar_url": author.avatar.url,
                 "discriminator": author.discriminator
             },
             "message": {
@@ -34,7 +34,7 @@ class Carteira(commands.Cog):
         encoded_token_data = base64.b64encode(json_token_data.encode()).decode()
         print(encoded_token_data)
 
-        buttonCreate = Button(label='Conectar Carteira', style=discord.ButtonStyle.url, url=f"http://localhost:3000/auth/user/{encoded_token_data}")
+        buttonCreate = Button(label='Conectar Carteira', style=discord.ButtonStyle.url, url=f"http://localhost:3000/auth/wallet?user={encoded_token_data}")
         viewButton.add_item(buttonCreate)
         embed = discord.Embed(
             title="Conectando sua Carteira",
