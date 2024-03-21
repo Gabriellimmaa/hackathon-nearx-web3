@@ -1,20 +1,38 @@
 "use client";
 
 import { ReactNode } from "react";
-import { WagmiConfig } from "wagmi";
-import { wagmiClient } from "~~/services/web3/wagmiClient";
-import { BlockieAvatar } from "~~/components/scaffold-eth";
-import { appChains } from "~~/services/web3/wagmiConnectors";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, getDefaultConfig, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import { argentWallet, ledgerWallet, trustWallet } from "@rainbow-me/rainbowkit/wallets";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WagmiProvider } from "wagmi";
+import { anvil, arbitrum, mainnet, optimism, optimismSepolia, polygon } from "wagmi/chains";
+
+const { wallets } = getDefaultWallets();
+
+const config = getDefaultConfig({
+  appName: "RainbowKit demo",
+  projectId: "YOUR_PROJECT_ID",
+  wallets: [
+    ...wallets,
+    {
+      groupName: "Other",
+      wallets: [argentWallet, trustWallet, ledgerWallet],
+    },
+  ],
+  chains: [anvil, optimism, optimismSepolia, mainnet, polygon, arbitrum],
+  ssr: true,
+});
+
+const queryClient = new QueryClient();
 
 const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      {/* <WagmiConfig client={wagmiClient}> */}
-      {/* <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar}> */}
-      {children}
-      {/* </RainbowKitProvider> */}
-      {/* </WagmiConfig> */}
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <RainbowKitProvider>{children}</RainbowKitProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
     </>
   );
 };

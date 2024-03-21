@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import Providers from "~~/Providers";
 import SessionProvider from "~~/utils/SessionProvider";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -25,7 +27,9 @@ export default async function RootLayout({
   return (
     <html className={`${outfit.variable} h-full`} lang="pt">
       <body className="bg-background-800 h-full">
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <Providers>
+          <SessionProvider session={session}>{children}</SessionProvider>
+        </Providers>
       </body>
     </html>
   );
