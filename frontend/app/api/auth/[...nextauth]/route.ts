@@ -41,6 +41,7 @@ const authOptions = {
       return { ...token, ...user };
     },
     async session({ session, user, token }: any) {
+      session.user.id = token.id;
       session.guilds = token?.guilds;
       return session;
     },

@@ -43,6 +43,36 @@ def guild_roles():
     response = asyncio.run(get_all_roles())
     return response
 
+@app.route('/user-guilds', methods=['PATCH'])
+def user_guilds():
+    guilds_ids = request.json['guilds_ids']
+    user_id_param = request.args.get('user_id')
+
+    if guilds_ids is None:
+        return jsonify({"error": "body guilds_ids não especificado"}), 400
+    if user_id_param is None:
+        return jsonify({"error": "parametro user_id não especificado"}), 400
+    
+    async def get_all_guilds_when_user_has_admin():
+        guilds = []
+        user_id = int(user_id_param)
+        for guild_id in guilds_ids:
+            guild = bot.get_guild(int(guild_id))
+            if guild:
+                member = guild.get_member(user_id)
+                if member:
+                    if member.guild_permissions.administrator:
+                        guilds.append({
+                            "id": guild.id,
+                            "name": guild.name,
+                            "icon_url": guild.icon.url if guild.icon else None,
+                        })
+
+        return jsonify({"guilds": guilds})
+
+    response = asyncio.run(get_all_guilds_when_user_has_admin())
+    return response
+
 @app.route('/update-channel', methods=['POST'])
 def update_channel():
     data = request.json

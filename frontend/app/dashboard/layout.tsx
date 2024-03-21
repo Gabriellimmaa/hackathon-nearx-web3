@@ -1,10 +1,11 @@
 import { ReactNode } from "react";
+import { ListGuilds } from "./components/ListGuilds.component";
+import { Logout } from "./components/Logout.component";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaDiscord } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdSupportAgent } from "react-icons/md";
-import { MdOutlineLogout } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
 
 export default function RootLayout({
@@ -15,8 +16,7 @@ export default function RootLayout({
   return (
     <div className="flex w-full h-[100vh]">
       <div className="bg-background-500 w-[72px] p-2 gap-2 flex flex-col">
-        <div className="bg-primary-500 w-[57px] h-[57px] rounded-md">.</div>
-        <div className="bg-primary-500 w-[57px] h-[57px] rounded-md">.</div>
+        <ListGuilds />
         <div className="border border-primary-500 w-[57px] h-[57px] rounded-md flex">
           <FaPlus className="text-primary-500 m-auto" size={32} />
         </div>
@@ -55,10 +55,7 @@ export default function RootLayout({
             Faça sua doação
           </button>
           <span className="w-fill h-[1px] bg-background-500"></span>
-          <div className="flex flex-row justify-between pb-4">
-            <div className="w-[28px] h-[28px] bg-primary-500"></div>
-            <MdOutlineLogout className="text-primary-500" size={24} />
-          </div>
+          <Logout />
         </div>
       </div>
       <div className="bg-background-500 flex flex-col flex-1">

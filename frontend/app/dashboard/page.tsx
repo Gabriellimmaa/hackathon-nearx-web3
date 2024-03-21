@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ListRoles } from "./components/ListRoles.component";
 import { FaPlus } from "react-icons/fa6";
 import { Header } from "~~/components/dashboard";
 
@@ -41,14 +42,7 @@ export default async function Dashboard() {
         <div className="col-span-2 bg-background-300 rounded-tl-lg p-4 flex flex-col">
           <h4>Cargos</h4>
           <div className="mt-4">
-            <button className="p-4 py-3 bg-opacity-30 bg-primary-500 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
-            <button className="p-4 py-3 bg-opacity-30 rounded-lg w-full text-start">Cargo aqui</button>
+            <ListRoles />
           </div>
         </div>
       </div>
