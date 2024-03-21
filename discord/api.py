@@ -1,5 +1,6 @@
 # Importe as bibliotecas necessárias
 from flask import Flask, jsonify,request
+from flask_cors import CORS
 from discord.ext import commands
 import asyncio
 import threading
@@ -11,6 +12,7 @@ load_dotenv()
 
 # Crie uma instância do Flask
 app = Flask(__name__)
+CORS(app, origins="*")
 
 # Configuração do bot do Discord
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
