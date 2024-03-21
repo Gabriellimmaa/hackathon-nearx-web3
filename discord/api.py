@@ -16,26 +16,30 @@ app = Flask(__name__)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 # Rota da API Flask
-@app.route('/say-hello', methods=['GET'])
-def say_hello():
-    # Função para fazer o bot enviar a mensagem
-    async def send_hello():
-        # Canal onde a mensagem será enviada (substitua pelo ID do canal desejado)
-        channel_id = 123456789012345678
-        # Mensagem a ser enviada
-        message = "Olá! Esta é uma mensagem do bot do Discord"
-        # Envia a mensagem para o canal específico
-        channel = bot.get_channel(channel_id)
-        if channel:
-            await channel.send(message)
-        else:
-            print("Canal não encontrado")
+@app.route('/guild-roles', methods=['GET'])
+def guild_roles():
+    guild_id_param = request.args.get('guild_id')
 
-    # Executa a função assíncrona
-    asyncio.run_coroutine_threadsafe(send_hello(), bot.loop)
-    
-    # Retorna uma resposta JSON
-    return jsonify({"message": f"Mensagem de 'Olá' enviada pelo bot do Discord! {bot.user.name}"})
+    if guild_id_param is None:
+        return jsonify({"error": "parametro guild_id não especificado"}), 400
+
+    async def get_all_roles():
+        guild_id = int(guild_id_param)
+        guild = bot.get_guild(guild_id)
+        if guild:
+            roles = []
+            for role in guild.roles:
+                roles.append({
+                    "id": role.id,
+                    "name": role.name,
+                })
+
+            return jsonify({"roles": roles})
+        else:
+            return jsonify({"error": "guild não encontrado"}), 404
+
+    response = asyncio.run(get_all_roles())
+    return response
 
 @app.route('/update-channel', methods=['POST'])
 def update_channel():
