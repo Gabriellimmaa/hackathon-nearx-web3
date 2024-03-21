@@ -2,13 +2,13 @@
 
 pragma solidity ^0.8.18;
 
-import {IERC721} from "../interfaces/IERC721.sol";
-import {IERC721Receiver} from "../interfaces/IERC721Receiver.sol";
-import {IERC721Metadata} from "../interfaces/IERC721Metadata.sol";
-import {Context} from "../utils/Context.sol";
-import {Strings} from "../utils/Strings.sol";
+import {IERC721} from "./interfaces/IERC721.sol";
+import {IERC721Receiver} from "./interfaces/IERC721Receiver.sol";
+import {IERC721Metadata} from "./interfaces/IERC721Metadata.sol";
+import {Context} from "./utils/Context.sol";
+import {Strings} from "./utils/Strings.sol";
 import {IERC165, ERC165} from "./ERC165.sol";
-import {IERC721Errors} from "../interfaces/draft-IERC6093.sol";
+import {IERC721Errors} from "./interfaces/draft-IERC6093.sol";
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
@@ -24,6 +24,11 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
     // Token symbol
     string private _symbol;
 
+    // URI base
+    string private _tokenURI;
+
+    uint256 private _maxSupply;
+
     mapping(uint256 tokenId => address) private _owners;
 
     mapping(address owner => uint256) private _balances;
@@ -35,10 +40,12 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor(string memory name_, string memory symbol_) {
+    constructor(string memory name_, string memory symbol_, uint256 initialSupply) {
         _name = name_;
         _symbol = symbol_;
+        _maxSupply = initialSupply;
     }
+
 
     /**
      * @dev See {IERC165-supportsInterface}.
@@ -81,14 +88,17 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
         return _symbol;
     }
 
+    function getMaxSupply() public view returns (uint256) {
+      return _maxSupply;
+    }
+
     /**
      * @dev See {IERC721Metadata-tokenURI}.
      */
     function tokenURI(uint256 tokenId) public view virtual returns (string memory) {
         _requireOwned(tokenId);
-
-        string memory baseURI = _baseURI();
-        return bytes(baseURI).length > 0 ? string.concat(baseURI, tokenId.toString()) : "";
+        require(tokenId > 0, "Token ID must be greater than 0");
+        return bytes(_tokenURI).length > 0 ? _tokenURI : "";
     }
 
     /**
@@ -96,8 +106,8 @@ abstract contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Er
      * token will be the concatenation of the `baseURI` and the `tokenId`. Empty
      * by default, can be overridden in child contracts.
      */
-    function _baseURI() internal view virtual returns (string memory) {
-        return "";
+    function setTokenURI(string memory newTokenURI) internal {
+        _tokenURI = newTokenURI;
     }
 
     /**
