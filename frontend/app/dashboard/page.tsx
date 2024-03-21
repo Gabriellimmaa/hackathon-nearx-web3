@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaPlus } from "react-icons/fa6";
 import { Header } from "~~/components/dashboard";
 
@@ -9,10 +10,13 @@ export default async function Dashboard() {
           title="Gerenciar Regras"
           description="Crie regras para limitar o acesso ao seu servidor discord. Essas funções podem ser linkadas aos respectivios cargos."
           right={
-            <button className="border border-primary-500 text-primary-500 p-4 rounded-md font-normal flex items-center gap-2">
+            <Link
+              href="/dashboard/rule"
+              className="border border-primary-500 text-primary-500 p-4 rounded-md font-normal flex items-center gap-2"
+            >
               <FaPlus className="text-primary-500" size={18} />
               Criar Regra
-            </button>
+            </Link>
           }
         />
       </div>
