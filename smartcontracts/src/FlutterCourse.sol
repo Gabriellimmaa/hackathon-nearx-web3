@@ -1,8 +1,10 @@
-// SPDX-License-Identifier: MIT License
-pragma solidity ^0.8.18;
+// SPDX-License-Identifier: MIT
 
-import "../lib/forge-std/src/token/ERC721.sol";
-import "../lib/forge-std/src/utils/Counters.sol";
+pragma solidity ^0.8.20;
+
+import "./utils/Counters.sol";
+import "./ERC721.sol";
+
 
 contract FlutterCourse is ERC721{
 
@@ -14,19 +16,37 @@ contract FlutterCourse is ERC721{
     }
 
     mapping(uint256 => TokenData) private _tokenData;
+    mapping(uint256 => string) private _tokenURIs;
     mapping(address => uint256[]) private _userTokens;
 
 
-    constructor() ERC721("FlutterCourse", "FLUT") {
+    constructor() ERC721("FlutterCourse", "FLUT", 2000) {
     }
 
-    function mint(address to, uint256 expirationDate) external returns (uint256) {
+    function mint(address to, uint256 expirationDate, string memory uri) external returns (uint256) {
+        uint256 _maxSupply = getMaxSupply();
+        require(_maxSupply == 0 || _tokenIds.current() < _maxSupply, "Max supply reached");
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
         _mint(to, newTokenId);
         _tokenData[newTokenId].expirationDate = expirationDate;
+        _tokenURIs[newTokenId] = uri;
         _userTokens[to].push(newTokenId);
         return newTokenId;
+    }
+
+    function getQtdAvailableTokens() public view returns (uint256) {
+        uint256 _maxSupply = getMaxSupply();
+        if(_maxSupply > 0){
+            return (_maxSupply - _tokenIds.current());
+        }
+        return 0;
+    }
+
+    function getTokenId(address user) public view returns (uint256[] memory) {
+        uint256[] memory tokens = _userTokens[user];
+        require(tokens.length > 0, "O usuario nao possui nenhum token");
+        return tokens;
     }
 
     function getExpirationDate(uint256 tokenId) public view returns (uint256) {
@@ -35,26 +55,8 @@ contract FlutterCourse is ERC721{
         return _tokenData[tokenId].expirationDate;
     }
 
-    function getTokenExpirationDate(address user) public view returns (uint256 expirationDate) {
-        uint256[] memory tokens = _userTokens[user];
-        require(tokens.length > 0, "O usuario nao possui nenhum token");
-
-        for (uint256 i = 0; i < tokens.length; i++) {
-            uint256 tokenId = tokens[i];
-            if (ownerOf(tokenId) == user) {
-                return _tokenData[tokenId].expirationDate;
-            }
-        }
-        revert("O usuario nao possui nenhum token valido");
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        require(bytes(_tokenURIs[tokenId]).length > 0, "Token URI not set");
+        return _tokenURIs[tokenId];
     }
-//    uint256 public number;
-
-//    function setNumber(uint256 newNumber) public {
-//        number = newNumber;
-//    }
-
-    //function increment() public {
-        //number++;
-//    }
 }
-
