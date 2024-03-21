@@ -10,6 +10,7 @@ import { getGuildRoles } from "~~/apis";
 import { Checkboxes } from "~~/components/Checkboxes";
 import { Input } from "~~/components/Input";
 import { Select } from "~~/components/Select";
+import { createClient } from "~~/utils/supabase/client";
 
 const ruleSchema = yup.object({
   title: yup.string().required("O campo Título é obrigatório"),
@@ -29,9 +30,12 @@ const ruleSchema = yup.object({
 type ruleFormData = yup.InferType<typeof ruleSchema>;
 
 export default function Rule() {
+  const supabase = createClient();
+
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ruleFormData>({
     resolver: yupResolver(ruleSchema),
@@ -51,8 +55,25 @@ export default function Rule() {
     queryFn: () => getGuildRoles("1220090771525472396"),
   });
 
-  async function onSubmit(data: ruleFormData) {
-    console.log(data);
+  async function onSubmit(formData: ruleFormData) {
+    const { data, error } = await supabase
+      .from("rule")
+      .insert([
+        {
+          address: formData.address,
+          chainType: formData.chainType,
+          qtdMax: formData.qtdMax,
+          qtdMin: formData.qtdMin,
+          title: formData.title,
+          tokenType: formData.tokenType,
+          roles: formData.roles,
+        },
+      ])
+      .select();
+
+    if (!error) {
+      reset();
+    }
   }
 
   return (
@@ -94,8 +115,7 @@ export default function Rule() {
                 onChange={onChange}
                 errorMessage={errors.chainType?.message}
               >
-                <option value="mainnet">Mainnet</option>
-                <option value="bitcoin">Bitcoin</option>
+                <option value="mainnet">optimismSepolia</option>
               </Select>
             )}
           />
@@ -111,7 +131,6 @@ export default function Rule() {
                 onChange={onChange}
                 errorMessage={errors.tokenType?.message}
               >
-                <option value="erc20">ERC20</option>
                 <option value="erc721">ERC721</option>
               </Select>
             )}
@@ -178,6 +197,7 @@ export default function Rule() {
 
         <button
           type="button"
+          onClick={() => reset()}
           className="font-normal border-2 border-primary-500 rounded-lg py-4 hover:border-primary-300 hover:bg-background-300 transition duration-300"
         >
           Resetar
