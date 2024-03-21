@@ -26,7 +26,7 @@ export default function AuthUserWaller() {
     chainId: optimismSepolia.id,
     functionName: "balanceOf",
   });
-
+  console.log(data);
   useEffect(() => {
     if (token) {
       const convertedBase64 = atob(token);
