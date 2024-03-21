@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useQuery } from "@tanstack/react-query";
+import { Controller, useForm } from "react-hook-form";
 import { SlArrowLeft } from "react-icons/sl";
+import * as yup from "yup";
+import { getGuildRoles } from "~~/apis";
+import { Checkboxes } from "~~/components/Checkboxes";
 import { Input } from "~~/components/Input";
 import { Select } from "~~/components/Select";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Checkboxes } from "~~/components/Checkboxes";
 
 const ruleSchema = yup.object({
   title: yup.string().required("O campo Título é obrigatório"),
@@ -26,26 +28,10 @@ const ruleSchema = yup.object({
 
 type ruleFormData = yup.InferType<typeof ruleSchema>;
 
-const array = [
-  {
-    id: "123",
-    name: "Administrador",
-  },
-  {
-    id: "456",
-    name: "Cargo 1",
-  },
-  {
-    id: "789",
-    name: "Cargo 2",
-  },
-];
-
 export default function Rule() {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<ruleFormData>({
     resolver: yupResolver(ruleSchema),
@@ -58,6 +44,11 @@ export default function Rule() {
       title: "",
       tokenType: "",
     },
+  });
+
+  const { data: guildRoles, isLoading } = useQuery({
+    queryKey: ["getGuildRoles"],
+    queryFn: () => getGuildRoles("1220090771525472396"),
   });
 
   async function onSubmit(data: ruleFormData) {
@@ -179,7 +170,8 @@ export default function Rule() {
           </div>
           <h1 className="text-2xl font-bold text-primary-500 mt-8">Vincular a um cargo discord</h1>
           <div className="flex flex-col gap-4 mt-3">
-            <Checkboxes options={array} control={control} name="roles" />
+            {isLoading && <p>Carregando...</p>}
+            {guildRoles && <Checkboxes options={guildRoles.roles} control={control} name="roles" />}
             {errors.roles && <p className="text-red-500 text-lg mt-1 font-normal">{errors.roles.message}</p>}
           </div>
         </div>

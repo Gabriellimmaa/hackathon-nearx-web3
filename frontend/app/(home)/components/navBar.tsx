@@ -35,10 +35,6 @@ export function NavBar() {
     }
   }
 
-  if (status === "loading") {
-    return <></>;
-  }
-
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
       <div className="flex bg-background-300 p-4 rounded-full gap-4 items-center justify-center flex-grow text-zinc-100">

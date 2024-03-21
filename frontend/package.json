@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--max-http-header-size=12800000' next dev",
     "start": "next dev",
     "build": "next build",
     "serve": "next start",
@@ -27,6 +27,7 @@
     "@tanstack/query-core": "^5.28.4",
     "@tanstack/react-query": "^5.28.4",
     "@uniswap/sdk": "^3.0.3",
+    "axios": "^1.6.8",
     "daisyui": "^2.31.0",
     "ethers": "^5.0.0",
     "lottie-react": "^2.4.0",

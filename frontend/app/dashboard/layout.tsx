@@ -25,7 +25,6 @@ export default function RootLayout({
         <div>
           <div className="bg-gradient-to-t from-primary-300 bg-primary-500 w-full h-[164px] rounded-b-lg"></div>
           <div className="p-4 flex flex-col justify-center">
-            {/* <h4 className="text-lg">Configurações</h4> */}
             <div className="flex gap-1 items-center pl-1">
               <FaDiscord className="text-primary-500" />
               <label className="text-sm">Logado com o discord</label>
