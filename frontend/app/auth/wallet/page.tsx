@@ -23,7 +23,7 @@ export default function AuthUserWaller() {
 
   const { data, isLoading, isError, isSuccess } = useReadContract({
     // endereco contrato
-    address: "0x3D1dDac02c60EDacAbA25C1D1ceD93eE96f6EFbb",
+    address: "0xaC1Db364ff7B61722d4406e7fc6caf85AB51B390",
     abi: ABI,
     // argumento da funcao
     // buscar uma nft especifica
