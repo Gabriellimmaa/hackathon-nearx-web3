@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import type { Metadata } from "next";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaDiscord } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
@@ -7,13 +6,6 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdSupportAgent } from "react-icons/md";
 import { MdOutlineLogout } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
-
-export const metadata: Metadata = {
-  title: {
-    template: "%s | devstore",
-    default: "devstore",
-  },
-};
 
 export default function RootLayout({
   children,
