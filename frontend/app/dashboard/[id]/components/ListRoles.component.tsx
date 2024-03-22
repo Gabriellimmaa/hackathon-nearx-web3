@@ -4,11 +4,15 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getGuildRoles } from "~~/apis";
 
-export function ListRoles() {
-  const [selectedRoleId, setSelectedRoleId] = useState<number | null>(null);
+type TListRoles = {
+  guildId: string;
+};
+
+export function ListRoles({ guildId }: TListRoles) {
+  const [selectedRoleId, setSelectedRoleId] = useState<string | null>(null);
   const { data: guildRoles, isLoading } = useQuery({
     queryKey: ["getGuildRoles"],
-    queryFn: () => getGuildRoles("1220090771525472396"),
+    queryFn: () => getGuildRoles(guildId),
   });
 
   return (

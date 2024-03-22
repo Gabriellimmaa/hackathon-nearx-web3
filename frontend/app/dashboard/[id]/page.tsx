@@ -100,7 +100,7 @@ export default function Dashboard({ params }: TParams) {
         <div className="col-span-2 bg-background-300 rounded-tl-lg p-4 flex flex-col">
           <h4>Cargos</h4>
           <div className="mt-4">
-            <ListRoles />
+            <ListRoles guildId={params.id} />
           </div>
         </div>
       </div>
