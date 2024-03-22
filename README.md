@@ -27,3 +27,10 @@
 
     Este projeto é uma solução inovadora para gerenciamento de acesso em comunidades do Discord, proporcionando
     uma experiência mais personalizada e exclusiva para os usuários.
+
+## Informações gerais
+- **Rede:** Optimism Sepolia Network
+- **Endereço do Contrato:** `0xaC1Db364ff7B61722d4406e7fc6caf85AB51B390`
+- **URL do Explorador de Blocos:** [https://sepolia-optimism.etherscan.io/address/0xaC1Db364ff7B61722d4406e7fc6caf85AB51B390](https://sepolia-optimism.etherscan.io/address/0xaC1Db364ff7B61722d4406e7fc6caf85AB51B390)
+
+
