@@ -21,12 +21,15 @@
     - Acesso aos Canais Restritos: Os usuários que possuem as NFTs adequadas têm acesso aos 
     canais restritos automaticamente.
 
-## Vídeo Explicativo:
+## Vídeo Explicativo (Pitch):
     Para uma visão mais detalhada sobre como utilizar a ferramenta e suas funcionalidades, 
     assista nosso vídeo explicativo: http://youtube.com/xyz
 
     Este projeto é uma solução inovadora para gerenciamento de acesso em comunidades do Discord, proporcionando
     uma experiência mais personalizada e exclusiva para os usuários.
+
+## Slides da Apresentação 
+[Pitch.pdf](./Pitch.pdf)
 
 ## Informações gerais
 - **Rede:** Optimism Sepolia Network
