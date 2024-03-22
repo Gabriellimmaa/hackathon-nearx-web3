@@ -22,6 +22,5 @@ export const postUpdateChannel = async ({
     role_id: roleId,
     permission: permissionsObject,
   });
-  console.log(data);
   return data;
 };

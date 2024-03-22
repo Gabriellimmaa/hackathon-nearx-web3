@@ -1,32 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { ListRoles } from "./components/ListRoles.component";
-import ModalInviteBot from "./components/ModalInviteBot.component";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { FaPlus } from "react-icons/fa6";
 import { patchGuildRoles } from "~~/apis";
-import { Header } from "~~/components/dashboard";
-import { createClient } from "~~/utils/supabase/client";
-import { useEffect, useState } from "react";
-
-interface TRule {
-  id: number;
-  address: string;
-  chainType: string;
-  qtdMax: string;
-  qtdMin: string;
-  title: string;
-  tokenType: string;
-  created_at: string;
-  roles: string[];
-}
+import Logo from "~~/public/logo.svg";
 
 export default function Dashboard() {
   const { data: session } = useSession();
-  const [rules, setRules] = useState<TRule[]>();
-  const supabase = createClient();
 
   const { data } = useQuery({
     queryKey: ["patchGuildRoles", session?.user.id],
@@ -38,99 +20,84 @@ export default function Dashboard() {
     enabled: !!session?.user.id,
   });
 
-  async function listAllRule() {
-    const { data: rule, error } = await supabase.from("rule").select("*");
-
-    if (!error) {
-      setRules(rule);
-    }
-  }
-
-  useEffect(() => {
-    listAllRule();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
-      <ModalInviteBot visible={data?.guilds.length === 0} />
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div className="relative my-6 mx-auto w-full max-w-screen-lg">
+          <div className="p-8 pt-2 border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-background-300 outline-none focus:outline-none">
+            <div className="relative flex justify-between gap-4 items-center">
+              <div>
+                <h1 className="text-3xl">Bem vindo, {session?.user.name}</h1>
+                <p className="my-4 text-blueGray-500 text-lg leading-relaxed">
+                  Aqui você tem acesso a todo o painel administrativo de nosso bot.
+                  <br /> Mas primeiro precisamos adiciona-lo em seu servidor
+                </p>
+              </div>
+              <Image src={Logo} alt="logo" width={200} height={200} />
+            </div>
 
-      <Header
-        title="Gerenciar Regras"
-        description="Crie regras para limitar o acesso ao seu servidor discord. Essas funções podem ser linkadas aos respectivios cargos."
-        right={
-          <Link
-            href="/dashboard/rule"
-            className="border border-primary-500 text-primary-500 p-4 rounded-md font-normal flex items-center gap-2"
-          >
-            <FaPlus className="text-primary-500" size={18} />
-            Criar Regra
-          </Link>
-        }
-      />
-      {/* <div className="flex flex-col justify-center text-center items-center gap-4">
-        <h1 className="text-xl">Você ainda não configurou nenhum regra para seus cargos</h1>
-        <h4 className="text-md font-thin">Basta clicar em criar regra e seguir as instruções</h4>
-        <button className="bg-primary-500 p-4 py-2 rounded-md w-[200px] mx-auto font-normal mt-4">Criar Regras</button>
-      </div> */}
-      <div className="grid grid-cols-8 gap-4 ml-8 h-full">
-        <div className="grid col-span-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-[75vh] overflow-auto">
-          {!rules ? (
-            <h1>Carregando...</h1>
-          ) : (
-            rules.map(rule => (
-              <Card
-                key={rule.id}
-                title={rule.title}
-                chain={rule.chainType}
-                token={rule.tokenType}
-                address={rule.address}
-                min={rule.qtdMin}
-                max={rule.qtdMax}
-              />
-            ))
-          )}
-        </div>
-        <div className="col-span-2 bg-background-300 rounded-tl-lg p-4 flex flex-col">
-          <h4>Cargos</h4>
-          <div className="mt-4">
-            <ListRoles />
+            <div
+              className="flex flex-col gap-4 max-h-72 overflow-y-auto"
+              style={{
+                scrollbarColor: "#232328 transparent",
+              }}
+            >
+              {data?.guilds.map(guild => {
+                return (
+                  <div key={guild.id} className="flex gap-4 items-center bg-background-500 rounded-lg pr-3">
+                    <Image
+                      src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                      alt={guild.name}
+                      width={64}
+                      height={64}
+                      className="rounded-md"
+                    />
+                    <div>
+                      <h2>{guild.name}</h2>
+                      <p>{guild.id}</p>
+                    </div>
+                    <Link
+                      href={`/dashboard/${guild.id}`}
+                      className="ml-auto text-center bg-primary-500 rounded-lg p-2 font-normal w-fit hover:bg-primary-300 transition duration-300 cursor-pointer"
+                    >
+                      Acessar Servidor
+                    </Link>
+                  </div>
+                );
+              })}
+              <h1 className="text-2xl mb-4">Selecione um servidor para adicionar o bot</h1>
+              {session?.guilds
+                .filter(guild => !data?.guilds.find(g => g.id === guild.id))
+                .map(guild => {
+                  return (
+                    <div key={guild.id} className="flex gap-4 items-center bg-background-500 rounded-lg pr-3">
+                      <Image
+                        src={`https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`}
+                        alt={guild.name}
+                        width={64}
+                        height={64}
+                        className="rounded-md"
+                      />
+                      <div>
+                        <h2>{guild.name}</h2>
+                        <p>{guild.id}</p>
+                      </div>
+                      <a
+                        className="ml-auto text-center bg-primary-500 rounded-lg p-2 font-normal w-32 hover:bg-primary-300 transition duration-300 cursor-pointer"
+                        target="_blank"
+                        // @todo
+                        href={`https://discord.com/api/oauth2/authorize?client_id=1220091005315846234&permissions=8&scope=bot&guild_id=${guild.id}`}
+                      >
+                        Adicionar
+                      </a>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>
+      <div className="opacity-80 fixed inset-0 z-40 bg-black"></div>
     </>
-  );
-}
-
-type TCard = {
-  title: string;
-  chain: string;
-  token: string;
-  address: string;
-  min: string;
-  max: string;
-};
-
-function Card({ title, chain, token, address, min, max }: TCard) {
-  return (
-    <div className="bg-background-300 grid w-full p-4 rounded-md gap-2">
-      <h4 className="mb-2">{title}</h4>
-      <div className="flex justify-between items-center">
-        <span>Chain / token type</span>
-        <span>
-          {chain} / {token}
-        </span>
-      </div>
-      <div className="flex justify-between items-center">
-        <span>Endereço</span>
-        <span>{address}</span>
-      </div>
-      <div className="flex justify-between items-center">
-        <span>Min / max tokens</span>
-        <span>
-          {min} / {max}
-        </span>
-      </div>
-    </div>
   );
 }

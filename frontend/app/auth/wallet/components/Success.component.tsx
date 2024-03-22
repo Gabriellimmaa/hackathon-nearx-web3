@@ -27,15 +27,10 @@ export function Success({ contractsData, userDiscord }: TProps) {
 
   useEffect(() => {
     if (qtdUserToken) {
-      console.log("contractsData");
-      console.log(contractsData);
-      console.log("qtdUserToken");
-      console.log();
       qtdUserToken.forEach((element: any) => {
         const qtd = parseInt(element.result.toString());
         rules?.data?.map(rule => {
           if (qtd >= parseInt(rule.qtdMin) && qtd <= parseInt(rule.qtdMax)) {
-            console.log({ userId: userDiscord.user.id, guild_id: userDiscord.guild_id, roles: rule.roles });
             mutationUserRole.mutate({
               user_id: userDiscord.user.id,
               guild_id: userDiscord.guild_id,

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ListRoles } from "./components/ListRoles.component";
 import ModalInviteBot from "./components/ModalInviteBot.component";
@@ -9,7 +10,6 @@ import { FaPlus } from "react-icons/fa6";
 import { patchGuildRoles } from "~~/apis";
 import { Header } from "~~/components/dashboard";
 import { createClient } from "~~/utils/supabase/client";
-import { useEffect, useState } from "react";
 
 type TParams = {
   params: {
@@ -119,9 +119,9 @@ type TCard = {
 
 function Card({ title, chain, token, address, min, max }: TCard) {
   return (
-    <div className="bg-background-300 grid w-full p-4 rounded-md gap-2">
+    <div className="bg-background-300 grid w-[400px] p-4 rounded-md gap-2 h-fit">
       <h4 className="mb-2">{title}</h4>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center text-nowrap">
         <span>Chain / token type</span>
         <span>
           {chain} / {token}
@@ -129,7 +129,7 @@ function Card({ title, chain, token, address, min, max }: TCard) {
       </div>
       <div className="flex justify-between items-center">
         <span>Endereço</span>
-        <span>{address}</span>
+        <span>{address.slice(0, 6)}</span>
       </div>
       <div className="flex justify-between items-center">
         <span>Min / max tokens</span>

@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { ListGuilds } from "./components/ListGuilds.component";
-import { ListPages } from "./components/ListPages.components";
-import { Logout } from "./components/Logout.component";
-import ModalInviteBot from "./components/ModalInviteBot.component";
+import { ListGuilds } from "../components/ListGuilds.component";
+import { ListPages } from "../components/ListPages.components";
+import { Logout } from "../components/Logout.component";
+import ModalInviteBot from "../components/ModalInviteBot.component";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaDiscord } from "react-icons/fa";
 import { IoMdHelpCircleOutline } from "react-icons/io";

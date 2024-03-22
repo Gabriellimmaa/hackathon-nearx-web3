@@ -1,12 +1,12 @@
 "use client";
 
-import { ListRoles } from "./components/ListRoles.component";
-import { ListChannels } from "./components/ListChannels.component";
-import { Header } from "~~/components/dashboard";
-import { ListPermission } from "./components/ListPermission.component";
 import { useState } from "react";
+import { ListChannels } from "./components/ListChannels.component";
+import { ListPermission } from "./components/ListPermission.component";
+import { ListRoles } from "./components/ListRoles.component";
 import { useMutation } from "@tanstack/react-query";
 import { postUpdateChannel } from "~~/apis/postUpdateChannel.api";
+import { Header } from "~~/components/dashboard";
 
 type TParams = {
   params: {
@@ -41,8 +41,6 @@ export default function Channel({ params }: TParams) {
       setSelectedChannelId("");
     }
   }
-
-  console.log(selectedPermissions.length);
 
   return (
     <div className="h-full">
