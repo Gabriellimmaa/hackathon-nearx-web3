@@ -1,11 +1,30 @@
+"use client";
+
 import Link from "next/link";
 import { ListRoles } from "./components/ListRoles.component";
+import ModalInviteBot from "./components/ModalInviteBot.component";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { FaPlus } from "react-icons/fa6";
+import { patchGuildRoles } from "~~/apis";
 import { Header } from "~~/components/dashboard";
 
-export default async function Dashboard() {
+export default function Dashboard() {
+  const { data: session } = useSession();
+
+  const { data } = useQuery({
+    queryKey: ["patchGuildRoles", session?.user.id],
+    queryFn: () =>
+      patchGuildRoles({
+        userId: session?.user.id || "",
+        guildsIds: session?.guilds.map(guild => guild.id) || [],
+      }),
+    enabled: !!session?.user.id,
+  });
+
   return (
     <>
+      <ModalInviteBot visible={data?.guilds.length === 0} />
       <div className="p-8">
         <Header
           title="Gerenciar Regras"

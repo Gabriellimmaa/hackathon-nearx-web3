@@ -7,7 +7,7 @@ export default function Channel() {
       <div className="p-8">
         <Header
           title="Gerenciar Canais"
-          description="Crie regras para limitar o acesso ao seu servidor discord. Essas funções podem ser linkadas aos respectivios cargos."
+          description="Gerencie todos os canais de seu discord e vincule ele aos cargos configurados."
         />
       </div>
       <div className="grid grid-cols-7 h-full">

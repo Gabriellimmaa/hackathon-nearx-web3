@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 import { ListGuilds } from "./components/ListGuilds.component";
+import { ListPages } from "./components/ListPages.components";
 import { Logout } from "./components/Logout.component";
+import ModalInviteBot from "./components/ModalInviteBot.component";
 import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaDiscord } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa6";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdSupportAgent } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
@@ -17,9 +18,7 @@ export default function RootLayout({
     <div className="flex w-full h-[100vh]">
       <div className="bg-background-500 w-[72px] p-2 gap-2 flex flex-col">
         <ListGuilds />
-        <div className="border border-primary-500 w-[57px] h-[57px] rounded-md flex">
-          <FaPlus className="text-primary-500 m-auto" size={32} />
-        </div>
+        <ModalInviteBot showButton />
       </div>
       <div className="bg-background-300 w-[240px] w-min-[240px] flex flex-col justify-between">
         <div>
@@ -30,20 +29,7 @@ export default function RootLayout({
               <label className="text-sm">Logado com o discord</label>
             </div>
           </div>
-          <div className="flex flex-col mt-4">
-            <div className="bg-primary-500 bg-opacity-20 px-4 py-2">
-              <a>Gerenciar Regras</a>
-            </div>
-            <div className="px-4 py-2">
-              <a>Gerenciar Canais</a>
-            </div>
-            <div className="px-4 py-2">
-              <a>Gerenciar Comunidade</a>
-            </div>
-            <div className="px-4 py-2">
-              <a>Configurações</a>
-            </div>
-          </div>
+          <ListPages />
         </div>
         <div className="px-4 flex flex-col gap-4">
           <button className="bg-primary-500 p-3 rounded-md font-normal w-full flex items-center gap-2 justify-center">

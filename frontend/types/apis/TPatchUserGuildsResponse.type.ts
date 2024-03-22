@@ -1,5 +1,5 @@
 type TGuild = {
-  id: number;
+  id: string;
   name: string;
   icon_url: string;
 };

@@ -96,7 +96,7 @@ def user_guilds():
                 if member:
                     if member.guild_permissions.administrator:
                         guilds.append({
-                            "id": guild.id,
+                            "id": str(guild.id),
                             "name": guild.name,
                             "icon_url": guild.icon.url if guild.icon else None,
                         })
