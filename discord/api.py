@@ -43,6 +43,39 @@ def guild_roles():
     response = asyncio.run(get_all_roles())
     return response
 
+@app.route('/guild-channels', methods=['GET'])
+def guild_channels():
+    guild_id_param = request.args.get('guild_id')
+
+    if guild_id_param is None:
+        return jsonify({"error": "parametro guild_id não especificado"}), 400
+
+    async def get_all_channels():
+        guild_id = int(guild_id_param)
+        guild = bot.get_guild(guild_id)
+        response = []
+        if guild:
+            for category in guild.categories:
+                channels = []
+                for channel in category.channels:
+                    channels.append({
+                        "id": channel.id,
+                        "name": channel.name,
+                        "type": str(channel.type),
+                        "category": category.name,
+                    })
+                response.append({
+                    "category": category.name,
+                    "channels": channels,
+                })
+            
+            return jsonify(response)
+        else:
+            return jsonify({"error": "guild não encontrado"}), 404
+
+    response = asyncio.run(get_all_channels())
+    return response
+
 @app.route('/user-guilds', methods=['PATCH'])
 def user_guilds():
     guilds_ids = request.json['guilds_ids']

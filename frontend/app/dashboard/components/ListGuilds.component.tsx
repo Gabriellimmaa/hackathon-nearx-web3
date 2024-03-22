@@ -7,11 +7,9 @@ import { patchGuildRoles } from "~~/apis";
 
 export function ListGuilds() {
   const { data: session } = useSession();
-  console.log("session");
-  console.log(session);
 
   const { data } = useQuery({
-    queryKey: ["guildRoles"],
+    queryKey: ["patchGuildRoles", session?.user.id],
     queryFn: () =>
       patchGuildRoles({
         userId: session?.user.id || "",
