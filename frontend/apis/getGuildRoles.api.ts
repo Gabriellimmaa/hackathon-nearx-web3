@@ -7,6 +7,6 @@ export const getGuildRoles = async (guildId: string | number): Promise<TGetGuild
       guild_id: guildId,
     },
   });
-
+  console.log(data);
   return data;
 };

@@ -11,6 +11,12 @@ import { Header } from "~~/components/dashboard";
 import { createClient } from "~~/utils/supabase/client";
 import { useEffect, useState } from "react";
 
+type TParams = {
+  params: {
+    id: string;
+  };
+};
+
 interface TRule {
   id: number;
   address: string;
@@ -23,7 +29,7 @@ interface TRule {
   roles: string[];
 }
 
-export default function Dashboard() {
+export default function Dashboard({ params }: TParams) {
   const { data: session } = useSession();
   const [rules, setRules] = useState<TRule[]>();
   const supabase = createClient();
@@ -60,7 +66,7 @@ export default function Dashboard() {
         description="Crie regras para limitar o acesso ao seu servidor discord. Essas funções podem ser linkadas aos respectivios cargos."
         right={
           <Link
-            href="/dashboard/rule"
+            href={`/dashboard/${params.id}/rule`}
             className="border border-primary-500 text-primary-500 p-4 rounded-md font-normal flex items-center gap-2"
           >
             <FaPlus className="text-primary-500" size={18} />

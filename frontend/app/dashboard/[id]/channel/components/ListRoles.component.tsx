@@ -5,8 +5,8 @@ import { getGuildRoles } from "~~/apis";
 
 type TListRolesProps = {
   guildId: string;
-  setSelectedRoleId: (selectedRoleId: number) => void;
-  selectedRoleId: number | null;
+  setSelectedRoleId: (selectedRoleId: string) => void;
+  selectedRoleId: string | null;
 };
 
 export function ListRoles({ guildId, setSelectedRoleId, selectedRoleId }: TListRolesProps) {

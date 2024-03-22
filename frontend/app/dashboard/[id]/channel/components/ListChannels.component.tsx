@@ -7,8 +7,8 @@ import { getGuildChannels } from "~~/apis/getGuildChannels.api";
 
 type TListChannelsProps = {
   guildId: string;
-  setSelectedChannelId: (selectedChannelId: number) => void;
-  selectedChannelId: number | null;
+  setSelectedChannelId: (selectedChannelId: string) => void;
+  selectedChannelId: string | null;
 };
 
 export function ListChannels({ guildId, setSelectedChannelId, selectedChannelId }: TListChannelsProps) {

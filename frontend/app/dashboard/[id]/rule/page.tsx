@@ -12,6 +12,12 @@ import { Input } from "~~/components/Input";
 import { Select } from "~~/components/Select";
 import { createClient } from "~~/utils/supabase/client";
 
+type TParams = {
+  params: {
+    id: string;
+  };
+};
+
 const ruleSchema = yup.object({
   title: yup.string().required("O campo Título é obrigatório"),
   chainType: yup.string().required("O campo Chain Type é obrigatório"),
@@ -29,7 +35,7 @@ const ruleSchema = yup.object({
 
 type ruleFormData = yup.InferType<typeof ruleSchema>;
 
-export default function Rule() {
+export default function Rule({ params }: TParams) {
   const supabase = createClient();
 
   const {
@@ -52,7 +58,7 @@ export default function Rule() {
 
   const { data: guildRoles, isLoading } = useQuery({
     queryKey: ["getGuildRoles"],
-    queryFn: () => getGuildRoles("1220090771525472396"),
+    queryFn: () => getGuildRoles(params.id),
   });
 
   async function onSubmit(formData: ruleFormData) {
@@ -80,7 +86,10 @@ export default function Rule() {
     <>
       <div className="p-8 flex">
         <div className="flex">
-          <Link href="/dashboard" className="flex justify-start items-center gap-3 text-3xl font-bold text-primary-500">
+          <Link
+            href={`/dashboard/${params.id}`}
+            className="flex justify-start items-center gap-3 text-3xl font-bold text-primary-500"
+          >
             <SlArrowLeft size={30} strokeWidth={50} />
             <p className="text-primary-500 font-bold">Gerenciar Cargos e Tokens</p>
           </Link>
@@ -188,7 +197,12 @@ export default function Rule() {
             />
           </div>
           <h1 className="text-2xl font-bold text-primary-500 mt-8">Vincular a um cargo discord</h1>
-          <div className="flex flex-col gap-4 mt-3">
+          <div
+            className="flex flex-col gap-4 mt-3 h-[216px] overflow-y-auto pr-2"
+            style={{
+              scrollbarColor: "#323238 transparent",
+            }}
+          >
             {isLoading && <p>Carregando...</p>}
             {guildRoles && <Checkboxes options={guildRoles.roles} control={control} name="roles" />}
             {errors.roles && <p className="text-red-500 text-lg mt-1 font-normal">{errors.roles.message}</p>}

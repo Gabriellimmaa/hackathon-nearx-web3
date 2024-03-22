@@ -1,5 +1,5 @@
 type TRole = {
-  id: number;
+  id: string;
   name: string;
 };
 
