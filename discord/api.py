@@ -5,7 +5,6 @@ from discord.ext import commands
 import asyncio
 import threading
 import discord
-from typing import Dict
 from dotenv import load_dotenv
 import os
 from pathlib import Path
