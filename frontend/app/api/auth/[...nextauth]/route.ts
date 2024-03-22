@@ -7,8 +7,8 @@ const scopes = ["identify", "email", "guilds", "gdm.join", "guilds.join", "conne
 const authOptions = {
   providers: [
     DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+      clientId: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID!,
+      clientSecret: process.env.NEXT_PUBLIC_DISCORD_CLIENT_SECRET!,
       authorization: { params: { scope: scopes } },
 
       async profile(profile, tokens) {
