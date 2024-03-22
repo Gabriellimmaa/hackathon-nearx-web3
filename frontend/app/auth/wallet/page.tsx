@@ -1,17 +1,18 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import ABI from "./abi.json";
+import { Success } from "./components/Success.component";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
 import { FaArrowRight } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { optimismSepolia } from "viem/chains";
-import { useAccount, useReadContract, useReadContracts, useWalletClient } from "wagmi";
-import { getRules, postAddUserRole } from "~~/apis";
+import { useAccount } from "wagmi";
+import { getRules } from "~~/apis";
 import Animation from "~~/public/assets/confetes.json";
 import Logo from "~~/public/logo.svg";
 import { TUserDiscord } from "~~/types";
@@ -19,60 +20,31 @@ import { TUserDiscord } from "~~/types";
 export default function AuthUserWaller() {
   const searchParams = useSearchParams();
   const account = useAccount();
-  const wallet = useWalletClient();
   const [userDiscord, setUserDiscord] = useState<TUserDiscord | null>(null);
   const token = searchParams.get("user");
 
-  // consultar backend supabase para verificar se as nfts do usuario estao na whitelist
+  const [contractsData, setContractsData] = useState([] as any[]);
+
   const { data: rules } = useQuery({
     queryKey: ["getRules"],
     queryFn: () => getRules(),
   });
 
-  // const {
-  //   data: qtdUserToken,
-  //   isLoading,
-  //   isError,
-  //   isSuccess,
-  // } = useReadContract({
-  //   // endereco contrato
-  //   address: rule.address as any,
-  //   abi: ABI,
-  //   // argumento da funcao
-  //   // buscar uma nft especifica
-  //   args: [account.address],
-  //   chainId: optimismSepolia.id,
-  //   functionName: "balanceOf",
-  // });
-
-  const { data: qtdUserToken, refetch } = useReadContracts({
-    contracts: rules?.data?.map(rule => ({
-      address: rule.address,
-      abi: ABI,
-      args: [account.address],
-      chainId: optimismSepolia.id,
-      functionName: "balanceOf",
-    })) as any,
-  });
-  console.log(qtdUserToken);
-
-  const postAddUserRole = useMutation({
-    mutationFn: ({ userId, guild_id, roles }: { userId: number; guild_id: number; roles: number[] }) =>
-      postAddUserRole({ userId, guild_id, roles }),
-  });
-
   useEffect(() => {
     if (rules) {
-      console.log(
-        rules?.data?.map(rule => ({
-          address: rule.address,
-          abi: ABI,
-          args: [account.address],
-          chainId: optimismSepolia.id,
-          functionName: "balanceOf",
-        })) as any,
-      );
-      refetch();
+      if (rules.data) {
+        setContractsData(
+          rules.data.map((rule: any) => {
+            return {
+              address: rule.address,
+              abi: ABI,
+              args: [account.address],
+              chainId: optimismSepolia.id,
+              functionName: "balanceOf",
+            };
+          }),
+        );
+      }
     }
   }, [rules]);
 
@@ -125,9 +97,7 @@ export default function AuthUserWaller() {
           {account.isConnected ? (
             <>
               <h2 className="my-10 text-4xl text-success">Conectado com sucesso</h2>
-              <p className="text-white">
-                Estamos processando sua carteira e logo você terá acesso a todas as funcionalidades
-              </p>
+              {!!userDiscord ? <Success contractsData={contractsData} userDiscord={userDiscord} /> : null}
             </>
           ) : (
             <>
@@ -137,11 +107,6 @@ export default function AuthUserWaller() {
               </p>
             </>
           )}
-
-          {/* <p>message_channel_id: {userDiscord?.message.channel_id}</p>
-        <p>message_id: {userDiscord?.message.id}</p>
-        <p>created_at: {userDiscord?.created_at}</p>
-        <p>guild_id: {userDiscord?.guild_id}</p> */}
         </div>
         <div className="p-2 bg-primary-500 rounded-xl border-2 border-white m-4 h-fit">
           <ConnectButton />

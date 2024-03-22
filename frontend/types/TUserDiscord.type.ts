@@ -1,6 +1,6 @@
 export type TUserDiscord = {
-  user: { id: number; name: string; avatar_url: string; discriminator: string };
-  message: { channel_id: number; id: number };
+  user: { id: string; name: string; avatar_url: string; discriminator: string };
+  message: { channel_id: string; id: string };
   created_at: string;
-  guild_id: number;
+  guild_id: string;
 };

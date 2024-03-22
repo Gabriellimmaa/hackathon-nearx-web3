@@ -16,17 +16,17 @@ class Carteira(commands.Cog):
         viewButton = View()        
         tokenData = {
             "user": {
-                "id": author.id,
+                "id": str(author.id),
                 "name": author.name,
                 "avatar_url": author.avatar.url,
                 "discriminator": author.discriminator
             },
             "message": {
-                "id": ctx.message.id,
-                "channel_id": ctx.message.channel.id,
+                "id": str(ctx.message.id),
+                "channel_id": str(ctx.message.channel.id),
             },
             "created_at": ctx.message.created_at.timestamp(),
-            "guild_id": ctx.message.guild.id
+            "guild_id": str(ctx.message.guild.id)
         }
         print(tokenData)
         json_token_data = json.dumps(tokenData)

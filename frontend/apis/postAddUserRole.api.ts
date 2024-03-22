@@ -1,14 +1,14 @@
 import { httpClient } from "~~/clients";
 
 type TProps = {
-  userId: number;
-  guild_id: number;
-  roles: number[];
+  user_id: string;
+  guild_id: string;
+  roles: string[];
 };
 
-export const postAddUserRole = async ({ userId, guild_id, roles }: TProps): Promise<void> => {
+export const postAddUserRole = async ({ user_id, guild_id, roles }: TProps): Promise<void> => {
   const { data } = await httpClient.post<void>(`/add-user-role`, {
-    userId,
+    user_id,
     guild_id,
     roles,
   });
