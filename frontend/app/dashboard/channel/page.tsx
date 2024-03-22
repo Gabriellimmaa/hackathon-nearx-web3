@@ -17,9 +17,6 @@ export default function Channel() {
             <ListChannels />
           </div>
         </div>
-        <div className="col-span-5 grid justify-center items-center">
-          <h1>asdasda</h1>
-        </div>
       </div>
     </div>
   );

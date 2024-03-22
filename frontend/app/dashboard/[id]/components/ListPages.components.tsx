@@ -4,24 +4,23 @@ import { usePathname } from "next/navigation";
 
 export function ListPages() {
   const route = usePathname();
-  const existsIdServer = route.split("/")[2];
 
   const routes = [
     {
       name: "Gerenciar Regras",
-      path: `/dashboard/${existsIdServer}`,
+      path: "/dashboard",
     },
     {
       name: "Gerenciar Canais",
-      path: `/dashboard/${existsIdServer}/channel`,
+      path: "/dashboard/channel",
     },
     {
       name: "Gerenciar Comunidade",
-      path: `/dashboard/${existsIdServer}/community`,
+      path: "/dashboard/community",
     },
     {
       name: "Configurações",
-      path: `/dashboard/${existsIdServer}/config`,
+      path: "/dashboard/config",
     },
   ];
 

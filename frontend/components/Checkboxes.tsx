@@ -7,8 +7,6 @@ export function Checkboxes({ options, control, name }) {
     name,
   });
 
-  console.log(field.value);
-
   // Inicializa um array de booleanos para acompanhar se cada opção está marcada
   const [checkedOptions, setCheckedOptions] = useState(() => {
     const initialValues = options.map(option => field.value?.includes(option.id));
