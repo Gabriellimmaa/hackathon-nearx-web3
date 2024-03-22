@@ -1,15 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import ABI from "./abi.json";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
 import { FaArrowRight } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { optimismSepolia } from "viem/chains";
-import { useAccount, useReadContract, useWalletClient } from "wagmi";
+import { useAccount, useReadContract, useReadContracts, useWalletClient } from "wagmi";
+import { getRules, postAddUserRole } from "~~/apis";
 import Animation from "~~/public/assets/confetes.json";
 import Logo from "~~/public/logo.svg";
 import { TUserDiscord } from "~~/types";
@@ -21,21 +23,58 @@ export default function AuthUserWaller() {
   const [userDiscord, setUserDiscord] = useState<TUserDiscord | null>(null);
   const token = searchParams.get("user");
 
-  const { data, isLoading, isError, isSuccess } = useReadContract({
-    // endereco contrato
-    address: "0xaC1Db364ff7B61722d4406e7fc6caf85AB51B390",
-    abi: ABI,
-    // argumento da funcao
-    // buscar uma nft especifica
-    args: [account.address],
-    chainId: optimismSepolia.id,
-    functionName: "balanceOf",
-  });
-  console.log(data);
-
   // consultar backend supabase para verificar se as nfts do usuario estao na whitelist
+  const { data: rules } = useQuery({
+    queryKey: ["getRules"],
+    queryFn: () => getRules(),
+  });
 
-  // se estiver na whitelist, liberar acesso a funcionalidades exclusivas
+  // const {
+  //   data: qtdUserToken,
+  //   isLoading,
+  //   isError,
+  //   isSuccess,
+  // } = useReadContract({
+  //   // endereco contrato
+  //   address: rule.address as any,
+  //   abi: ABI,
+  //   // argumento da funcao
+  //   // buscar uma nft especifica
+  //   args: [account.address],
+  //   chainId: optimismSepolia.id,
+  //   functionName: "balanceOf",
+  // });
+
+  const { data: qtdUserToken, refetch } = useReadContracts({
+    contracts: rules?.data?.map(rule => ({
+      address: rule.address,
+      abi: ABI,
+      args: [account.address],
+      chainId: optimismSepolia.id,
+      functionName: "balanceOf",
+    })) as any,
+  });
+  console.log(qtdUserToken);
+
+  const postAddUserRole = useMutation({
+    mutationFn: ({ userId, guild_id, roles }: { userId: number; guild_id: number; roles: number[] }) =>
+      postAddUserRole({ userId, guild_id, roles }),
+  });
+
+  useEffect(() => {
+    if (rules) {
+      console.log(
+        rules?.data?.map(rule => ({
+          address: rule.address,
+          abi: ABI,
+          args: [account.address],
+          chainId: optimismSepolia.id,
+          functionName: "balanceOf",
+        })) as any,
+      );
+      refetch();
+    }
+  }, [rules]);
 
   useEffect(() => {
     if (token) {

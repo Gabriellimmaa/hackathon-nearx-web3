@@ -8,6 +8,8 @@ import discord
 from typing import Dict
 from dotenv import load_dotenv
 import os
+from pathlib import Path
+
 load_dotenv() 
 
 # Crie uma instância do Flask
@@ -59,7 +61,7 @@ def guild_channels():
                 channels = []
                 for channel in category.channels:
                     channels.append({
-                        "id": channel.id,
+                        "id": str(channel.id),
                         "name": channel.name,
                         "type": str(channel.type),
                         "category": category.name,
@@ -109,7 +111,7 @@ def user_guilds():
 @app.route('/update-channel', methods=['POST'])
 def update_channel():
     data = request.json
-
+    
     if 'channel_id' not in data:
         return jsonify({"error": "ID do canal não especificado"}), 400
     
@@ -159,7 +161,7 @@ def add_user_role():
         roles_discord = []
         for role_id in roles:
             try: 
-                roles_discord.append(discord.utils.get(guild.roles, id=role_id))
+                roles_discord.append(discord.utils.get(guild.roles, id=int(role_id)))
             except: 
                 pass
 
@@ -210,15 +212,30 @@ def remove_user_role():
     response = 'Cargos removidos com sucesso'
     return jsonify({"message": response})
     
+@bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Game(name="Desenvolvido por gabriellimamoraes"))
 
-# Função para rodar o bot do Discord
-async def run_bot():
-    await bot.start(str(os.getenv("BOT_TOKEN")))
+    cogs_dir = Path("cogs").resolve()
+    for path in cogs_dir.rglob("*.py"):
+        if "__pycache__" not in path.parts:
+            cog_path = path.relative_to(cogs_dir)
+            cog_parts = list(cog_path.parts)
+            if len(cog_parts) > 1:
+                cog = f"cogs.{cog_parts[0]}.{cog_parts[1]}.{cog_path.stem}"
+            else:
+                cog = f"cogs.{cog_path.stem}"
+            print("Carregando:", cog)
+            try:
+                await bot.load_extension(cog)
+            except Exception as e:
+                print(f"{cog} falhou ao ser carregado:", str(e))
 
-# Roda o bot em uma thread separada
-bot_thread = threading.Thread(target=bot.run, args=(str(os.getenv("BOT_TOKEN")),))
-bot_thread.start()
+    print(f"Logged in as {bot.user}")
 
 # Roda a API Flask
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Roda o bot em uma thread separada
+    bot_thread = threading.Thread(target=bot.run, args=(str(os.getenv("BOT_TOKEN")),))
+    bot_thread.start()
+    app.run(debug=False)

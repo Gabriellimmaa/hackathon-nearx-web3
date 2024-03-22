@@ -28,7 +28,7 @@ async def on_ready():
     if not diaria.is_running():
         diaria.start()
         
-    cogs_dir = Path("discord/cogs").resolve()
+    cogs_dir = Path("cogs").resolve()
     for path in cogs_dir.rglob("*.py"):
         if "__pycache__" not in path.parts:
             cog_path = path.relative_to(cogs_dir)

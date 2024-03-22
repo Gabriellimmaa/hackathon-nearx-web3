@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { patchGuildRoles } from "~~/apis";
-import Link from "next/link";
 
 export function ListGuilds() {
   const { data: session } = useSession();
