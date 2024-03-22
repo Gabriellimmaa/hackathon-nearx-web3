@@ -24,7 +24,7 @@ export function ListGuilds() {
       {data?.guilds.map((guild, index) => {
         return (
           <Link href={`/dashboard/${guild.id}`} key={index} className="bg-primary-500 w-[57px] h-[57px] rounded-md">
-            <Image src={guild.icon_url} alt={`guild-${index}`} width={57} height={57} />
+            <Image src={guild.icon_url} alt={`guild-${index}`} width={57} height={57} className="rounded-md" />
           </Link>
         );
       })}

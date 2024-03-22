@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import Image from "next/image";
 import { ListGuilds } from "../components/ListGuilds.component";
 import { ListPages } from "../components/ListPages.components";
 import { Logout } from "../components/Logout.component";
@@ -8,6 +9,7 @@ import { FaDiscord } from "react-icons/fa";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { MdSupportAgent } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
+import Logo from "~~/public/logo.svg";
 
 export default function RootLayout({
   children,
@@ -22,7 +24,9 @@ export default function RootLayout({
       </div>
       <div className="bg-background-300 w-[240px] w-min-[240px] flex flex-col justify-between">
         <div>
-          <div className="bg-gradient-to-t from-primary-300 bg-primary-500 w-full h-[164px] rounded-b-lg"></div>
+          <div className="bg-gradient-to-t from-primary-300 bg-primary-500 w-full h-[164px] rounded-b-lg">
+            <Image src={Logo} alt="logo" height={154} className="m-auto" />
+          </div>
           <div className="p-4 flex flex-col justify-center">
             <div className="flex gap-1 items-center pl-1">
               <FaDiscord className="text-primary-500" />

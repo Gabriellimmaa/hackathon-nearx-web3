@@ -80,7 +80,7 @@ export default function Dashboard({ params }: TParams) {
         <button className="bg-primary-500 p-4 py-2 rounded-md w-[200px] mx-auto font-normal mt-4">Criar Regras</button>
       </div> */}
       <div className="grid grid-cols-8 gap-4 ml-8 h-full">
-        <div className="grid col-span-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 h-[75vh] overflow-auto">
+        <div className="grid col-span-6 grid-cols-2 gap-4 overflow-auto h-fit">
           {!rules ? (
             <h1>Carregando...</h1>
           ) : (
@@ -119,7 +119,7 @@ type TCard = {
 
 function Card({ title, chain, token, address, min, max }: TCard) {
   return (
-    <div className="bg-background-300 grid w-[400px] p-4 rounded-md gap-2 h-fit">
+    <div className="bg-background-300 grid p-4 rounded-md gap-2 h-[200px]">
       <h4 className="mb-2">{title}</h4>
       <div className="flex justify-between items-center text-nowrap">
         <span>Chain / token type</span>

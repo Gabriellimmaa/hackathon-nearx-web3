@@ -14,9 +14,9 @@ export default async function Home() {
     <>
       <Session1Component />
 
-      <Session2Component />
+      {/* <Session2Component /> */}
 
-      <Session3Component />
+      {/* <Session3Component /> */}
 
       <Session4Component />
 

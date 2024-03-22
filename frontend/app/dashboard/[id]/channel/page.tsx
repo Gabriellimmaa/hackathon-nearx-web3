@@ -66,13 +66,13 @@ export default function Channel({ params }: TParams) {
           </div>
         )}
         {selectedRoleId && (
-          <div className="h-[688px] bg-background-300 rounded-lg p-4 flex flex-col border-l-2 border-background-500 gap-5">
+          <div className="bg-background-300 rounded-lg p-4 flex flex-col border-l-2 border-background-500 gap-5">
             <h1 className="text-xl mb-1">Permissões</h1>
             <ListPermission setSelectedPermissions={setSelectedPermissions} selectedPermissions={selectedPermissions} />
             <button
               disabled={selectedPermissions.length === 0}
               onClick={handleSubmitUpdateChannel}
-              className={`border-2 ${
+              className={`mt-auto border-2 ${
                 selectedPermissions.length === 0
                   ? "border-gray-300 text-gray-300 cursor-not-allowed"
                   : "border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white"

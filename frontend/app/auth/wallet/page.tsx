@@ -67,11 +67,13 @@ export default function AuthUserWaller() {
       >
         <div className="flex flex-col justify-center items-center text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center gap-8">
           <div className="flex mt-8">
-            <p>Olá </p>
-            <h1 className="ml-2">
-              {userDiscord?.user.name}#{userDiscord?.user.discriminator}
+            <h1 className="ml-2 font-thin">
+              Olá{" "}
+              <b>
+                {userDiscord?.user.name}#{userDiscord?.user.discriminator}
+              </b>
+              , seja bem-vindo ao CryptoGuardian
             </h1>
-            <p>, seja bem-vindo ao CryptoGuardian</p>
           </div>
           <div className="flex gap-4 items-center">
             <Image

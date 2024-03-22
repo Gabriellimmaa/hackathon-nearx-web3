@@ -142,7 +142,7 @@ export function ListPermission({ setSelectedPermissions, selectedPermissions }: 
 
   return (
     <div
-      className="overflow-y-auto flex flex-col gap-4 mt-2 h-[520px]"
+      className="overflow-y-auto flex flex-col gap-4 mt-2 h-[420px]"
       style={{
         scrollbarColor: "#232328 transparent",
       }}

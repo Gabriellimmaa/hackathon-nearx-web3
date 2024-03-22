@@ -18,20 +18,20 @@ export function Session4Component() {
       <div className="grid grid-cols-1 xl:grid-cols-3 justify-center items-center mt-16 md:px-20 lg:px-60 gap-10">
         <Benefits
           img="/cards/ilimitado.svg"
-          title="Criação de cargos ilimitados"
-          description="Crie quantos cargos precisar através da plataforma, ela automaticamente os enviará ao seu servidor."
+          title="Valorização de Ativos Digitais"
+          description="Os usuários podem adquirir, comercializar e colecionar NFTs, criando um ecossistema vibrante e dinâmico em torno de sua comunidade."
         />
 
         <Benefits
           img="/cards/grafico.svg"
-          title="Taxa de mensalidade fix"
+          title="Taxa de mensalidade fixa"
           description="Sem surpresas desagradáveis ou preocupações orçamentárias, apenas a mesma taxa fixa a cada mês."
         />
 
         <Benefits
           img="/cards/block.svg"
           title="Bloqueio automatico"
-          description="Você pode bloquear - melhorar esse aqui biel kkkkkkk"
+          description="Controle de Acesso Seguro e Exclusivo: "
         />
       </div>
     </div>

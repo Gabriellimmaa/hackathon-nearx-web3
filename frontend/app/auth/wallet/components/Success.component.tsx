@@ -48,7 +48,9 @@ export function Success({ contractsData, userDiscord }: TProps) {
       {loading ? (
         <p>Estamos processando sua carteira e logo você terá acesso a todas as funcionalidades</p>
       ) : (
-        <p>Tudo pronto! já liberamos seu acesso em nosso servidor</p>
+        <>
+          <p>Tudo pronto! já liberamos seu acesso em nosso servidor</p>
+        </>
       )}
     </>
   );
