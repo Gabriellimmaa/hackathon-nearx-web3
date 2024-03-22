@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { GoPlus } from "react-icons/go";
@@ -94,14 +95,13 @@ export default function ModalInviteBot({ visible = false, showButton = false }: 
                             <h2>{guild.name}</h2>
                             <p>{guild.id}</p>
                           </div>
-                          <a
+                          <Link
                             className="ml-auto text-center bg-primary-500 rounded-lg p-2 font-normal w-32 hover:bg-primary-300 transition duration-300 cursor-pointer"
                             target="_blank"
-                            // @todo
                             href={`https://discord.com/api/oauth2/authorize?client_id=1220091005315846234&permissions=8&scope=bot&guild_id=${guild.id}`}
                           >
                             Adicionar
-                          </a>
+                          </Link>
                         </div>
                       );
                     })}
