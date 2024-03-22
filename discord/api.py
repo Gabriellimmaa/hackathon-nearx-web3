@@ -34,7 +34,7 @@ def guild_roles():
             roles = []
             for role in guild.roles:
                 roles.append({
-                    "id": role.id,
+                    "id": str(role.id),
                     "name": role.name,
                 })
 
