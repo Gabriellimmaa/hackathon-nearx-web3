@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import {Counter} from "../src/Counter.sol";
 import {FlutterCourse} from "../src/FlutterCourse.sol";
 import {Utils} from "./Utils.t.sol";
 
@@ -10,9 +9,7 @@ contract BaseSetup is Utils {
     FlutterCourse myFlutterCourse; 
     uint256 expirationDate = block.timestamp + (30 days); // Definindo a data de expiração para 30 dias a partir de agora
 
-   
-    Counter counter;
-
+  
     address[] _users;
     address controller;
     address alice;
@@ -39,9 +36,13 @@ contract BaseSetup is Utils {
         vm.label(zero, "ZERO");
 
         vm.startPrank(controller);
-        counter = new Counter();
         myFlutterCourse = new FlutterCourse();
-        myFlutterCourse.mint(alice, expirationDate);
+        myFlutterCourse.mint(alice, expirationDate,"https://bafybeie2gwegnbmwswuaqhzjm6sn3ia6xzbbnzxi2icay5grxkyr3qjwte.ipfs.w3s.link/flutter30-09-2024.png");
+        myFlutterCourse.mint(eve, expirationDate,"https://bafybeie2gwegnbmwswuaqhzjm6sn3ia6xzbbnzxi2icay5grxkyr3qjwte.ipfs.w3s.link/flutter30-09-2024.png");
+        myFlutterCourse.getMaxSupply();
+        myFlutterCourse.getQtdAvailableTokens();
+        myFlutterCourse.getTokenId(alice);
+        myFlutterCourse.getExpirationDate(1); //Token 1
         vm.stopPrank();
     }
 
