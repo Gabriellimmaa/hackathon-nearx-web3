@@ -23,7 +23,8 @@
 
 ## Vídeo Explicativo (Pitch):
     Para uma visão mais detalhada sobre como utilizar a ferramenta e suas funcionalidades, 
-    assista nosso vídeo explicativo: http://youtube.com/xyz
+    assista nosso vídeo explicativo: 
+[Youtube](https://www.youtube.com/watch?v=QcniFn49Bh0)
 
     Este projeto é uma solução inovadora para gerenciamento de acesso em comunidades do Discord, proporcionando
     uma experiência mais personalizada e exclusiva para os usuários.
